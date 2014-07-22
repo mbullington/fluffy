@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+	<schema id="com.github.mbullington.fluffy" path="/com/github/mbullington/fluffy/">
+    <key type="as" name="desktop-daemons">
+      <default>["/usr/lib/gnome-settings-daemon/gnome-settings-daemon"]</default>
+      <summary>Path to the settings daemons like GNOME Settings Daemon, or whatever you use.</summary>
+    </key>
+    <key type="s" name="desktop-wm">
+      <default>"mutter"</default>
+      <summary>Path to the window manager.</summary>
+    </key>
+    <key type="as" name="desktop-components">
+      <default>["plank"]</default>
+      <summary>List of applications to start after the WM.</summary>
+    </key>
+  </schema>
+</schemalist>
