@@ -1,5 +1,4 @@
 using GLib;
-using Gee;
 
 int main() {
   new FluffyMain();
@@ -8,12 +7,12 @@ int main() {
 
 class FluffyMain : GLib.Object {
 
-  Gee.List<int> status_codes;
+  List<int> status_codes;
   string home_dir;
   MainLoop loop;
 
   public FluffyMain() {
-    status_codes = new ArrayList<int>();
+    status_codes = new List<int>();
     home_dir = Environment.get_home_dir();
     loop = new MainLoop();
   
@@ -59,7 +58,7 @@ class FluffyMain : GLib.Object {
   
   void add_all(int[] array) {
     foreach(int obj in array) {
-      status_codes.add(obj);
+      status_codes.append(obj);
     }
   }
   
@@ -70,7 +69,7 @@ class FluffyMain : GLib.Object {
     int pid;
     Process.spawn_async(home_dir, argv, null, SpawnFlags.STDOUT_TO_DEV_NULL | SpawnFlags.STDERR_TO_DEV_NULL | SpawnFlags.DO_NOT_REAP_CHILD | SpawnFlags.SEARCH_PATH, null, out pid);
     ChildWatch.add(pid, (pid0, status) => { 
-      if(status_codes.index_of(status) == -1) {
+      if(status_codes.index(status) == -1) {
         Timeout.add(100, () => {
           try {
             message(app);
