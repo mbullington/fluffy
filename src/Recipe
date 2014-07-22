@@ -1,6 +1,6 @@
 programs.fluffy {
   sources = main.vala
   version = 1.0.0
-  vala-packages = gio-2.0 gee-1.0
-  packages = gee-1.0 gio-2.0
+  vala-packages = gio-2.0
+  packages = gio-2.0
 }
