@@ -17,11 +17,6 @@
 
 using GLib;
 
-int main() {
-  new FluffyMain();
-  return 0;
-}
-
 enum FluffyState {
   INIT,
   WINDOWMANAGER,
@@ -33,8 +28,9 @@ enum FluffyState {
   }
 }
 
-class FluffyMain : GLib.Object {
+class FluffyApplication : GLib.Application {
 
+  // LoginManager login;
   List<int> status_codes;
   string home_dir;
   MainLoop loop;
@@ -50,14 +46,34 @@ class FluffyMain : GLib.Object {
     }
   }
 
-  public FluffyMain() {
+  public FluffyApplication() {
+    Object(application_id: "com.github.mbullington.fluffy", flags: 0);
+
+    SimpleAction action = new SimpleAction("log-out", null);
+    action.activate.connect(() => {
+      message("Logout signal received");
+      Process.exit(0);
+    });
+    this.add_action(action);
+  }
+
+  public override void activate () {
+    Posix.openlog("fluffy", Posix.LOG_PID, Posix.LOG_USER);
+    Log.set_default_handler(glib_log_func);
+
+/*
+    try {
+      login = Bus.get_proxy_sync(BusType.SYSTEM, "org.freedesktop.login1",
+          "/org/freedesktop/login1");
+    } catch(IOError e) {
+      error("fluffy only works on systemd enviroments, or a system with a logind compatible DBus API.");
+    }
+*/
+
     status_codes = Utilities.get_list({2, 126, 127, 130});
 
     home_dir = Environment.get_home_dir();
     loop = new MainLoop();
-
-    Posix.openlog("fluffy", Posix.LOG_PID, Posix.LOG_USER);
-    Log.set_default_handler(glib_log_func);
 
     var settings = new Settings("com.github.mbullington.fluffy");
 
@@ -71,6 +87,18 @@ class FluffyMain : GLib.Object {
     launch_apps(settings.get_strv("desktop-components"));
 
     loop.run();
+  }
+
+  public static int main(string[] args) {
+    var app = new FluffyApplication();
+
+    if(args.length > 1 && args[1] == "log-out") {
+      app.register(null);
+      app.activate_action("log-out", null);
+      return 0;
+    }
+
+    return app.run(args);
   }
 
   int launch_app(string app) {

@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2014-2015 Michael Bullington
+  Copyright (C) 2015 Michael Bullington <mikebullingtn@gmail.com>
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -15,13 +15,13 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace Utilities {
+using GLib;
 
-  public static GLib.List<int> get_list(int[] array) {
-    List<int> list = new List<int>();
-    foreach(int obj in array) {
-      list.append(obj);
-    }
-    return list;
-  }
+[DBus(name = "org.freedesktop.login1.Manager")]
+public interface LoginManager : Object {
+  public abstract Variant[] list_inhibitors() throws IOError;
+
+  public abstract void power_off(bool interactive) throws IOError;
+  public abstract void reboot(bool interactive) throws IOError;
+  public abstract void suspend(bool interactive) throws IOError;
 }
