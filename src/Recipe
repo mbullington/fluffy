@@ -1,6 +1,13 @@
 programs.fluffy {
-  sources = Utilities.vala Main.vala
+  sources = main/Utilities.vala main/Main.vala
   version = 1.0.0
   vala-packages = gio-2.0 posix
   packages = gio-2.0
+}
+
+programs.fluffy-dialog {
+  sources = dialog/LoginManager.vala dialog/Dialog.vala dialog/Main.vala
+  version = 1.0.0
+  vala-packages = gtk+-3.0 gdk-3.0
+  packages = gtk+-3.0
 }

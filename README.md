@@ -20,8 +20,3 @@ You can use GSettings to configure these three layers. It's under the GSettings 
 ## License
 
 Fluffy is under GPLv3. You can read the license under the LICENSE file.
-
-## TODO
-
-- Hook fluffy into systemd logout/hibernate, allow for easy logging off. Right now, you'll have to kill the fluffy process.
-- Remove dependency on libgee.

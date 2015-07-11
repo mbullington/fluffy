@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2014-2015 Michael Bullington <mikebullingtn@gmail.com>
+  Copyright (C) 2014 Michael Bullington <mikebullingtn@gmail.com>
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -29,8 +29,6 @@ enum FluffyState {
 }
 
 class FluffyApplication : GLib.Application {
-
-  // LoginManager login;
   List<int> status_codes;
   string home_dir;
   MainLoop loop;
@@ -57,18 +55,9 @@ class FluffyApplication : GLib.Application {
     this.add_action(action);
   }
 
-  public override void activate () {
+  public override void activate() {
     Posix.openlog("fluffy", Posix.LOG_PID, Posix.LOG_USER);
     Log.set_default_handler(glib_log_func);
-
-/*
-    try {
-      login = Bus.get_proxy_sync(BusType.SYSTEM, "org.freedesktop.login1",
-          "/org/freedesktop/login1");
-    } catch(IOError e) {
-      error("fluffy only works on systemd enviroments, or a system with a logind compatible DBus API.");
-    }
-*/
 
     status_codes = Utilities.get_list({2, 126, 127, 130});
 
