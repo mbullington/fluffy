@@ -37,7 +37,7 @@ public static int main(string[] args) {
   var logout = new Button.with_label("Logout");
   logout.clicked.connect(() => {
     dialog.close();
-    Process.spawn_command_line_async("fluffy log-out");
+    Process.spawn_command_line_sync("fluffy log-out");
   });
 
 
